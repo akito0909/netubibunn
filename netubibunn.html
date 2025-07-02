@@ -46,7 +46,7 @@ netubibunn.html
             width: 320px;
         }
 
-        .start-button {
+        .start-button, .reset-button { /* reset-buttonにも同じスタイルを適用 */
             background-color: #d3d3d3;
             border: 1px solid #a0a0a0;
             padding: 10px 30px;
@@ -59,12 +59,23 @@ netubibunn.html
             margin-bottom: 20px;
             width: fit-content;
         }
-        .start-button:hover {
+        .start-button:hover, .reset-button:hover {
             background-color: #c0c0c0;
         }
-        .start-button:active {
+        .start-button:active, .reset-button:active {
             background-color: #b0b0b0;
             box-shadow: none;
+        }
+        /* Resetボタンの特定の色 */
+        .reset-button {
+            background-color: #ffe0b2; /* 淡いオレンジ */
+            border-color: #ffb74d; /* 少し濃いオレンジ */
+        }
+        .reset-button:hover {
+            background-color: #ffcc80;
+        }
+        .reset-button:active {
+            background-color: #ffb74d;
         }
 
         .time-counter {
@@ -125,7 +136,6 @@ netubibunn.html
             font-size: 24px;
         }
 
-
         .equation-discrete {
             margin-top: 25px;
             font-family: 'Times New Roman', serif;
@@ -136,6 +146,44 @@ netubibunn.html
         .equation-discrete .param-r {
             margin-left: 50px;
         }
+
+        /* --- 温度設定セレクション --- */
+        .temperature-settings {
+            position: absolute;
+            top: 520px; /* 数式の下に配置 */
+            left: 400px;
+            width: 320px;
+            background-color: #e8f5e9; /* 薄い緑 */
+            border: 1px solid #c8e6c9; /* 緑の枠線 */
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .temperature-settings h3 {
+            font-size: 18px;
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: #388e3c; /* 濃い緑 */
+        }
+
+        .temp-option {
+            margin-bottom: 8px;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+        }
+
+        .temp-option label {
+            cursor: pointer;
+            padding-left: 5px;
+        }
+
+        .temp-option input[type="radio"] {
+            margin-right: 8px;
+            transform: scale(1.2); /* ラジオボタンを少し大きく */
+        }
+
 
         /* --- グラフと図のセクション --- */
         .visuals-section {
@@ -237,22 +285,47 @@ netubibunn.html
                 </div>
             </div>
             <div class="equation-discrete">
+                <h2>差分近似式</h2>
                 <span>u<sub>i,j+1</sub> = r(u<sub>i+1,j</sub> + u<sub>i-1,j</sub>) + (1-2r)u<sub>i,j</sub></span>
-                <span class="param-r">r = &alpha;&Delta;t/&Delta;x<sup>2</sup></span>
+                <span class="param-r">r = k(微少時間)/h^2(微少距離)
             </div>
+        </div>
+    </div>
+
+    <div class="temperature-settings">
+        <h3>初期温度設定</h3>
+        <div class="temp-option">
+            <input type="radio" id="tempOption1" name="tempOption" value="option1" checked>
+            <label for="tempOption1">均一な高温 (80℃) &amp; 両端低温 (20℃)</label>
+        </div>
+        <div class="temp-option">
+            <input type="radio" id="tempOption2" name="tempOption" value="option2">
+            <label for="tempOption2">左端高温 (80℃) &amp; 右端低温 (20℃) &amp; その他は中間 (50℃)</label>
+        </div>
+        <div class="temp-option">
+            <input type="radio" id="tempOption3" name="tempOption" value="option3">
+            <label for="tempOption3">中央高温 (80℃) &amp; 両端低温 (20℃)</label>
+        </div>
+        <div class="temp-option">
+            <input type="radio" id="tempOption4" name="tempOption" value="option4">
+            <label for="tempOption4">両端高温 (80℃) &amp; 均一な低温 (20℃)</label>
         </div>
     </div>
 
     <div class="control-panel">
         <div class="start-button" id="startButton">開始</div>
+        <div class="reset-button" id="resetButton">リセット</div>
         <div class="time-counter" id="timeCounter">t : 0.00</div>
     </div>
 
     <div class="visuals-section">
         <p class="graph-title">温度u</p>
-        <svg width="400" height="250" class="graph-svg" id="temperatureGraph">
+        <svg width="480" height="250" class="graph-svg" id="temperatureGraph">
             <g transform="translate(50, 20)">
-                <line x1="0" y1="200" x2="300" y2="200" class="axis" /> <line x1="0" y1="0" x2="0" y2="200" class="axis" />   <text x="305" y="205" class="axis-label">x</text> <text x="-20" y="10" class="axis-label">u</text>
+                <line x1="0" y1="200" x2="300" y2="200" class="axis" />
+                <line x1="0" y1="0" x2="0" y2="200" class="axis" />
+                <text x="305" y="205" class="axis-label">x</text>
+                <text x="-20" y="10" class="axis-label">u</text>
                 
                 <path class="dashed-line" id="initialTemperatureCurve" />
                 <text x="310" y="35" class="label-text" id="initialTemperatureLabel">t=0 (初期温度)</text>
@@ -265,8 +338,9 @@ netubibunn.html
         <div class="diagram">
             <div class="diagram-block"></div>
             <div class="diagram-bar-wrapper" id="diagramBar">
-                </div>
+            </div>
             <div class="diagram-block"></div>
+            
         </div>
     </div>
 </div>
@@ -285,7 +359,7 @@ netubibunn.html
     const r = alpha * dt / (dx * dx); // 安定性パラメータ
     console.log("Stability parameter r:", r.toFixed(4)); // rの値を確認 (0.5以下推奨)
 
-    const totalSimulationTime = 5; // シミュレーション終了時間
+    const totalSimulationTime = 20; // シミュレーション終了時間
     let currentTime = 0; // 現在のシミュレーション時間
 
     // --- 新しい設定: 1フレームあたりに進めるシミュレーションステップ数 ---
@@ -298,32 +372,26 @@ netubibunn.html
     let u_initial = new Array(nx + 1).fill(0);
 
     // --- 初期条件の設定 ---
-    const initialUniformTemperature = 80; // ★ここを変更：初期の一定温度
-    const boundaryTemperature = 20; // 境界の温度 (両端)
+    // これらは定数として保持し、initializeTemperature()内で使用
+    const TEMP_HIGH = 80;
+    const TEMP_LOW = 20;
+    const TEMP_MIDDLE = 50;
 
-    function initializeTemperature() {
-        for (let i = 0; i <= nx; i++) {
-            u[i] = initialUniformTemperature; // 全体を一定温度で初期化
-            u_initial[i] = initialUniformTemperature; // 初期温度を保存
-        }
-        // 境界条件 (固定温度)
-        u[0] = boundaryTemperature; // 左端の温度
-        u[nx] = boundaryTemperature; // 右端の温度
-        u_initial[0] = boundaryTemperature; // 初期温度の境界も設定
-        u_initial[nx] = boundaryTemperature; // 初期温度の境界も設定
-    }
-    
-    // 初期温度を設定
-    initializeTemperature();
 
-    // --- DOM要素の取得 ---
+    // DOM要素の取得
     const startButton = document.getElementById('startButton');
+    const resetButton = document.getElementById('resetButton');
     const timeCounter = document.getElementById('timeCounter');
     const temperatureGraph = document.getElementById('temperatureGraph');
     const currentTemperatureCurve = document.getElementById('currentTemperatureCurve');
     const initialTemperatureCurve = document.getElementById('initialTemperatureCurve');
     const initialTemperatureLabel = document.getElementById('initialTemperatureLabel');
     const diagramBar = document.getElementById('diagramBar');
+    // ラジオボタンの要素を取得
+    const tempOption1 = document.getElementById('tempOption1');
+    const tempOption2 = document.getElementById('tempOption2');
+    const tempOption3 = document.getElementById('tempOption3');
+    const tempOption4 = document.getElementById('tempOption4'); // Add this line
 
     const graphDrawingWidthPixels = 300; 
     const graphHeight = 200;
@@ -369,7 +437,9 @@ netubibunn.html
         for (let i = 0; i < nx; i++) {
             const segment = document.createElement('div');
             segment.classList.add('diagram-segment');
-            segment.style.backgroundColor = getColorFromTemperature(u[i]);
+            // u[i]とu[i+1]の中間点の温度で色を決定する
+            const averageTemp = (u[i] + u[i+1]) / 2;
+            segment.style.backgroundColor = getColorFromTemperature(averageTemp);
             diagramBar.appendChild(segment);
         }
     }
@@ -408,15 +478,89 @@ netubibunn.html
         }
     }
 
+    // 新しい初期温度設定ロジック
+    function setInitialConditionsBasedOnSelection() {
+        // 全体を初期温度でリセット
+        for (let i = 0; i <= nx; i++) {
+            u[i] = 0; // 一旦全て0にする
+            u_initial[i] = 0;
+        }
+
+        if (tempOption1.checked) {
+            // オプション1: 均一な高温 & 両端低温
+            for (let i = 0; i <= nx; i++) {
+                u[i] = TEMP_HIGH;
+                u_initial[i] = TEMP_HIGH;
+            }
+            u[0] = TEMP_LOW;
+            u[nx] = TEMP_LOW;
+            u_initial[0] = TEMP_LOW;
+            u_initial[nx] = TEMP_LOW;
+        } else if (tempOption2.checked) {
+            // オプション2: 左端高温 & 右端低温 & その他は中間
+            for (let i = 0; i <= nx; i++) {
+                u[i] = TEMP_MIDDLE; // 全体を中間温度で初期化
+                u_initial[i] = TEMP_MIDDLE;
+            }
+            u[0] = TEMP_HIGH; // 左端を高温
+            u[nx] = TEMP_LOW;  // 右端を低温
+            u_initial[0] = TEMP_HIGH;
+            u_initial[nx] = TEMP_LOW;
+        } else if (tempOption3.checked) {
+            // オプション3: 中央高温 & 両端低温
+            for (let i = 0; i <= nx; i++) {
+                u[i] = TEMP_LOW; // 全体を低温で初期化
+                u_initial[i] = TEMP_LOW;
+            }
+            // 中央部分を高温にする（例: 中央の10%）
+            const centerStart = Math.floor(nx * 0.45);
+            const centerEnd = Math.floor(nx * 0.55);
+            for (let i = centerStart; i <= centerEnd; i++) {
+                u[i] = TEMP_HIGH;
+                u_initial[i] = TEMP_HIGH;
+            }
+            u[0] = TEMP_LOW;
+            u[nx] = TEMP_LOW;
+            u_initial[0] = TEMP_LOW;
+            u_initial[nx] = TEMP_LOW;
+        } else if (tempOption4.checked) { // 新しく追加する部分
+            // オプション4: 両端高温 & 中央低温
+            for (let i = 0; i <= nx; i++) {
+                u[i] = TEMP_LOW; // 全体を低温で初期化
+                u_initial[i] = TEMP_LOW;
+            }
+            u[0] = TEMP_HIGH; // 左端を高温
+            u[nx] = TEMP_HIGH; // 右端を高温
+            u_initial[0] = TEMP_HIGH;
+            u_initial[nx] = TEMP_HIGH;
+        }
+    }
+
+    // シミュレーションをリセットする関数
+    function resetSimulation() {
+        cancelAnimationFrame(animationFrameId); // 現在のアニメーションを停止
+        currentTime = 0; // 時間をリセット
+        setInitialConditionsBasedOnSelection(); // 選択されたオプションに基づいて温度を初期状態にリセット
+        updateGraph(true); // 初期温度曲線を再描画
+        updateGraph(false); // 現在の温度曲線（初期状態と同じ）を再描画
+        updateDiagramBar(); // 棒グラフを更新
+        timeCounter.textContent = `t : ${currentTime.toFixed(2)}`; // 時間表示をリセット
+        startButton.textContent = '開始'; // 開始ボタンのテキストを「開始」に戻す
+        startButton.disabled = false; // 開始ボタンを有効にする
+    }
+
     // --- イベントリスナー ---
     startButton.addEventListener('click', () => {
         if (startButton.textContent === '開始') {
             startButton.textContent = '停止';
             startButton.disabled = false; 
             
-            currentTime = 0;
-            initializeTemperature(); // 温度を初期状態に戻す
-
+            // シミュレーションが一時停止中でない場合、または完全に終了している場合に初期化
+            if (currentTime === 0 || currentTime === totalSimulationTime) {
+                setInitialConditionsBasedOnSelection(); // 選択されたオプションに基づいて初期温度を設定
+                currentTime = 0;
+            }
+            
             updateGraph(true);
             updateGraph(false);
             updateDiagramBar();
@@ -429,7 +573,20 @@ netubibunn.html
         }
     });
 
+    // リセットボタンのイベントリスナー
+    resetButton.addEventListener('click', resetSimulation);
+
+    // 温度設定ラジオボタンのイベントリスナー
+    document.querySelectorAll('input[name="tempOption"]').forEach(radio => {
+        radio.addEventListener('change', () => {
+            // ラジオボタンが変更されたら、シミュレーションをリセットして新しい初期条件を適用
+            resetSimulation();
+        });
+    });
+
     // ページロード時の初期描画
+    // 最初はデフォルトの選択肢（オプション1）で初期化
+    setInitialConditionsBasedOnSelection(); 
     updateGraph(true);
     updateGraph(false);
     updateDiagramBar();
