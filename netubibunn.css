@@ -1,0 +1,256 @@
+/* 全体のフォント設定 */
+body {
+    font-family: 'Hiragino Sans', 'Meiryo', sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+    background-color: #f0f0f0;
+}
+
+/* 全体を囲むコンテナ */
+.container {
+    position: relative;
+    width: 850px;
+    height: 750px; /* 全体の高さをさらに増やす */
+    margin: 40px auto;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    box-shadow: 0 0 15px rgba(0,0,0,0.05);
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* 各要素の配置 */
+.main-title {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 18px;
+    letter-spacing: 1px;
+    color: #555;
+}
+
+/* 開始ボタンと時間カウンターの新しい位置 */
+.control-panel {
+    position: absolute;
+    top: 400px; /* さらに下に移動 */
+    left: 20px;
+    width: 320px;
+}
+
+.start-button, .reset-button { /* reset-buttonにも同じスタイルを適用 */
+    background-color: #d3d3d3;
+    border: 1px solid #a0a0a0;
+    padding: 10px 30px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.2s;
+    display: block;
+    margin-bottom: 20px;
+    width: fit-content;
+}
+.start-button:hover, .reset-button:hover {
+    background-color: #c0c0c0;
+}
+.start-button:active, .reset-button:active {
+    background-color: #b0b0b0;
+    box-shadow: none;
+}
+/* Resetボタンの特定の色 */
+.reset-button {
+    background-color: #ffe0b2; /* 淡いオレンジ */
+    border-color: #ffb74d; /* 少し濃いオレンジ */
+}
+.reset-button:hover {
+    background-color: #ffcc80;
+}
+.reset-button:active {
+    background-color: #ffb74d;
+}
+
+.time-counter {
+    background-color: #fff8e1;
+    border: 3px solid #ffab40;
+    padding: 15px 20px;
+    border-radius: 8px;
+    font-size: 24px;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 4px;
+    color: #e65100;
+    width: fit-content;
+}
+
+/* --- 数式セクション --- */
+.equation-section {
+    position: absolute;
+    top: 70px;
+    left: 20px;
+    width: 320px;
+}
+
+.equation-section h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: #444;
+}
+
+.equations-wrapper {
+    font-size: 20px;
+    line-height: 1.8;
+}
+
+.equation-pde {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: 20px;
+}
+
+.fraction {
+    display: inline-flex;
+    flex-direction: column;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 22px;
+}
+
+.numerator {
+    padding: 0 5px;
+    border-bottom: 2px solid #333;
+}
+
+.denominator {
+    padding: 0 5px;
+}
+.equation-pde span {
+    font-size: 24px;
+}
+
+.equation-discrete {
+    margin-top: 25px;
+    font-family: 'Times New Roman', serif;
+    font-size: 19px;
+    letter-spacing: 0.5px;
+}
+
+.equation-discrete .param-r {
+    margin-left: 50px;
+}
+
+/* --- 温度設定セレクション --- */
+.temperature-settings {
+    position: absolute;
+    top: 520px; /* 数式の下に配置 */
+    left: 400px;
+    width: 320px;
+    background-color: #e8f5e9; /* 薄い緑 */
+    border: 1px solid #c8e6c9; /* 緑の枠線 */
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.temperature-settings h3 {
+    font-size: 18px;
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #388e3c; /* 濃い緑 */
+}
+
+.temp-option {
+    margin-bottom: 8px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+}
+
+.temp-option label {
+    cursor: pointer;
+    padding-left: 5px;
+}
+
+.temp-option input[type="radio"] {
+    margin-right: 8px;
+    transform: scale(1.2); /* ラジオボタンを少し大きく */
+}
+
+
+/* --- グラフと図のセクション --- */
+.visuals-section {
+    position: absolute;
+    top: 50px; /* 数式の横に配置 */
+    left: 360px;
+    width: 450px;
+}
+
+.graph-title {
+    text-align: center;
+    font-size: 22px;
+    margin: 0;
+    color: #444;
+}
+
+/* SVGグラフのスタイル */
+.graph-svg {
+    border: 1px solid #ccc;
+    background-color: #fcfcfc;
+    margin-top: 10px;
+}
+
+.graph-svg .axis {
+    stroke: black;
+    stroke-width: 1.5;
+}
+
+.graph-svg .axis-label {
+    font-size: 20px;
+}
+
+.graph-svg .curve {
+    stroke: #d90429;
+    stroke-width: 2.5;
+    fill: none;
+}
+
+.graph-svg .dashed-line { /* t=0の曲線に使うクラス */
+    stroke: #555;
+    stroke-width: 1.5; /* 少し太くして見やすく */
+    stroke-dasharray: 5, 5; /* ダッシュ間隔を調整 */
+    fill: none;
+}
+
+.graph-caption {
+    text-align: center;
+    font-size: 18px;
+    margin-top: 10px;
+    color: #555;
+}
+
+/* 下部の図 */
+.diagram {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 40px; /* グラフと鉄棒の間の余白 */
+    width: 100%;
+}
+
+.diagram-block {
+    width: 70px;
+    height: 100px;
+    background-color: #e9f1f6;
+    border: 1px solid #b0c4de;
+}
+
+.diagram-bar-wrapper {
+    width: 300px;
+    height: 70px;
+    display: flex;
+}
+
+.diagram-segment {
+    flex-grow: 1;
+    height: 100%;
+}
